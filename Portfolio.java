@@ -19,10 +19,23 @@ public class Portfolio
     public double getInvestment(){
         return investment;
     }
+    
     public double getPayout(){
         return payout;
     }
     
+    private int getIndex(String symbol){
+        int index = 0;
+        for(int i=0;i<stocks.size();i++){
+            if(stocks.get(i).getSymbol().equals(symbol)){
+                index = i;
+            }
+            else{
+                index = -1;
+            }
+        }
+        return index;
+    }
     // @Override
     public String toString()
     {
