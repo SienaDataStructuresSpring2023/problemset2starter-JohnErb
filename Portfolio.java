@@ -36,6 +36,21 @@ public class Portfolio
         }
         return index;
     }
+    
+    public double buyStock(String symbol, String name, double shares, double price){
+        int index = getIndex(symbol);
+        double cost = 0;
+        if(index != -1){
+            stocks.get(index).buyShares(shares, price);
+        }
+        else{
+            StockHolding newStock = new StockHolding(symbol, name, shares, price);
+            stocks.add(newStock);
+        }
+        cost = price*shares;
+        investment += cost;
+        return cost;
+    }
     // @Override
     public String toString()
     {
