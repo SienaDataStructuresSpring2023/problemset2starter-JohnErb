@@ -51,6 +51,28 @@ public class Portfolio
         investment += cost;
         return cost;
     }
+    
+    public double sellStock(String symbol, double shares){
+        int index = getIndex(symbol);
+        double cost =0;
+        if(stocks.get(index).getNumShares()>shares){
+            cost = stocks.get(index).sellShares(shares);
+        }
+        if(stocks.get(index).getNumShares()-shares==0){
+            cost = stocks.get(index).sellShares(shares);
+            stocks.remove(index);
+        }
+        payout+=cost;
+        return cost;
+    }
+    
+    public double getCurrentValue(){
+        double total =0;
+        for(int i=0;i<stocks.size();i++){
+            total = total + (stocks.get(i).getNumShares()*stocks.get(i).getPrice()); 
+        }
+        return total;
+    }
     // @Override
     public String toString()
     {
