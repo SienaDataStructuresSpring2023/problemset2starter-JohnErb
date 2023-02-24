@@ -12,7 +12,7 @@ public class Portfolio
     private double investment;
     private double payout;
     public Portfolio(){
-        ArrayList<StockHolding>stocks  = new ArrayList<StockHolding>();
+        stocks  = new ArrayList<StockHolding>();
         investment = 0;
         payout = 0;
     }
@@ -26,7 +26,6 @@ public class Portfolio
     
     private int getIndex(String symbol){
         int index = 0;
-        if(stocks.get(0) != null){
             for(int i=0;i<stocks.size();i++){
                 if(stocks.get(i).getSymbol().equals(symbol)){
                     index = i;
@@ -35,22 +34,20 @@ public class Portfolio
                     index = -1;
                 }
             }
-        }
-        else{
-            index = 0;
-        }
+        
+
         return index;
     }
     
     public double buyStock(String symbol, String name, int shares, double price){
         int index = getIndex(symbol);
         double cost = 0;
-        if(index != -1){
+        if(index != -1 && index != 0){
             stocks.get(index).buyShares(shares, price);
         }
         else{
             StockHolding newStock = new StockHolding(symbol, name, shares, price);
-            stocks.add(index, newStock);
+            stocks.add(newStock);
         }
         cost = price*shares;
         investment += cost;
@@ -60,12 +57,17 @@ public class Portfolio
     public double sellStock(String symbol, int shares){
         int index = getIndex(symbol);
         double cost = 0;
-        if(stocks.get(index).getNumShares()>shares){
-            cost = stocks.get(index).sellShares(shares);
+        if(index != -1){
+            if(stocks.get(index).getNumShares()>shares){
+                cost = stocks.get(index).sellShares(shares);
+            }
+            if(stocks.get(index).getNumShares()-shares==0){
+                cost = stocks.get(index).sellShares(shares);
+                stocks.remove(index);
+            }
         }
-        if(stocks.get(index).getNumShares()-shares==0){
-            cost = stocks.get(index).sellShares(shares);
-            stocks.remove(index);
+        else{
+            return -1;
         }
         payout+=cost;
         return cost;

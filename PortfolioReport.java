@@ -39,7 +39,7 @@ public class PortfolioReport
                 int shares = Integer.parseInt(data[2]);
                 p.sellStock(data[1],shares );
             }
-            
+
         }
 
         System.out.print(p);
