@@ -11,7 +11,7 @@ public class StockHolding
     private double numShares;
     private double price;
     // @Override
-    public StockHolding(String symbol, String name, double numShares, double price){
+    public StockHolding(String symbol, String name, int numShares, double price){
         this.symbol = symbol;
         this.name = name;
         this.numShares = numShares;
@@ -34,12 +34,12 @@ public class StockHolding
         return price;    
     }
     
-    public void buyShares(double newShares, double newPrice){
+    public void buyShares(int newShares, double newPrice){
         numShares += newShares;
         price = newPrice;
     }
     
-    public double sellShares(double shares){
+    public double sellShares(int shares){
         double profit = 0;
         if(numShares>= shares){
             profit = shares*price;

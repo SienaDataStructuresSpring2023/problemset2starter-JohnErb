@@ -26,18 +26,23 @@ public class Portfolio
     
     private int getIndex(String symbol){
         int index = 0;
-        for(int i=0;i<stocks.size();i++){
-            if(stocks.get(i).getSymbol().equals(symbol)){
-                index = i;
+        if(stocks.get(0) != null){
+            for(int i=0;i<stocks.size();i++){
+                if(stocks.get(i).getSymbol().equals(symbol)){
+                    index = i;
+                }                                   
+                else{
+                    index = -1;
+                }
             }
-            else{
-                index = -1;
-            }
+        }
+        else{
+            index = 0;
         }
         return index;
     }
     
-    public double buyStock(String symbol, String name, double shares, double price){
+    public double buyStock(String symbol, String name, int shares, double price){
         int index = getIndex(symbol);
         double cost = 0;
         if(index != -1){
@@ -45,16 +50,16 @@ public class Portfolio
         }
         else{
             StockHolding newStock = new StockHolding(symbol, name, shares, price);
-            stocks.add(newStock);
+            stocks.add(index, newStock);
         }
         cost = price*shares;
         investment += cost;
         return cost;
     }
     
-    public double sellStock(String symbol, double shares){
+    public double sellStock(String symbol, int shares){
         int index = getIndex(symbol);
-        double cost =0;
+        double cost = 0;
         if(stocks.get(index).getNumShares()>shares){
             cost = stocks.get(index).sellShares(shares);
         }

@@ -8,8 +8,8 @@ import java.io.FileNotFoundException;
  * accordingly.  Then, this program prints the portfolio report
  * as described in the problem set 2 instructions.
  *
- * @author 
- * @version 
+ * @author (John Erb)
+ * @version (2/23/2023)
  */
 public class PortfolioReport
 {
@@ -28,22 +28,26 @@ public class PortfolioReport
 
         while(file.hasNext()){
             String line = file.nextLine();
-            String[] data = line.split(",");
+            String[] data = line.split(", ");
             if(data[0].equals("B")){
                 //Buy the stock for the portfolio.
-                //YOUR CODE HERE.
+                int shares = Integer.parseInt(data[3]);
+                double price = Double.parseDouble(data[4]);
+                p.buyStock(data[1], data[2], shares, price);
             } else {
                 //Sell the stock from the portfolio.
-                //YOUR CODE HERE.
+                int shares = Integer.parseInt(data[2]);
+                p.sellStock(data[1],shares );
             }
+            
         }
 
         System.out.print(p);
         System.out.println();
         
         // Uncomment the lines of code below and complete the print statements to work as intended.
-        // System.out.println(String.format("      Current Value:  $%,15.2f", //YOUR CODE HERE.));
-        // System.out.println(String.format("Lifetime Investment:  $%,15.2f", //YOUR CODE HERE.));
-        // System.out.println(String.format("    Lifetime Payout:  $%,15.2f", //YOUR CODE HERE.));
+        System.out.println(String.format("      Current Value:  $%,15.2f", p.getCurrentValue()));
+        System.out.println(String.format("Lifetime Investment:  $%,15.2f", p.getInvestment()));
+        System.out.println(String.format("    Lifetime Payout:  $%,15.2f", p.getPayout()));
     }
 }
