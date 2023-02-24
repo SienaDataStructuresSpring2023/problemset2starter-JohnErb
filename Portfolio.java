@@ -1,10 +1,10 @@
 import java.util.ArrayList;
 
 /**
- * Write a description of class Portfolio here.
+ * Creates an arrayList called portfolio which holds individual stockHoldings from the StockHolding class.
  *
- * @author (your name)
- * @version (a version number or a date)
+ * @author (John Erb)
+ * @version (2/22/23)
  */
 public class Portfolio
 {
@@ -24,6 +24,13 @@ public class Portfolio
         return payout;
     }
     
+    
+    /**
+     * Finds the index of the stock in the array list. Using the given symbol.
+     *
+     * @param symbol 
+     * @returns index
+     */
     private int getIndex(String symbol){
         int index = 0;
             for(int i=0;i<stocks.size();i++){
@@ -39,6 +46,12 @@ public class Portfolio
         return index;
     }
     
+    /**
+     * Adds shares at a new price if stock is already being held. If not adds stock to portfolio while adding to the life investment counter.
+     *
+     * @param symbol, name, shares, and price 
+     * @returns how much it cost
+     */
     public double buyStock(String symbol, String name, int shares, double price){
         int index = getIndex(symbol);
         double cost = 0;
@@ -54,6 +67,12 @@ public class Portfolio
         return cost;
     }
     
+    /**
+     * Sells the stock given the symbol, and how many shares. If no shares remain the item is removed from the arrayList. Also adds to lifetime payout.
+     *
+     * @param symbol and shares
+     * @returns profit from selling 
+     */
     public double sellStock(String symbol, int shares){
         int index = getIndex(symbol);
         double cost = 0;
@@ -73,6 +92,11 @@ public class Portfolio
         return cost;
     }
     
+    /**
+     * Gets the current value of the portfolio by multipling shares owned by price
+     
+     * @returns total value
+     */
     public double getCurrentValue(){
         double total =0;
         for(int i=0;i<stocks.size();i++){

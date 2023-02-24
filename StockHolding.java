@@ -1,6 +1,6 @@
 
 /**
- * Write a description of class Asset here.
+ * Class which creates a stock object to be held in portfolio class.
  *
  * @author (John Erb)
  * @version (2/21/2023)
