@@ -77,8 +77,7 @@ public class StockHolding
     public String toString()
     {
         // //DO NOT EDIT THIS METHOD.
-        //return String.format("%6s%25s%,10d  $%,12.2f  $%,12.2f%n");
-        String output = symbol+ " " + name + " " + numShares+ " " + price+ " " + (numShares*price);
-        return output;
+        return String.format("%6s%25s%,10d  $%,12.2f  $%,12.2f%n", symbol, name, numShares, price, numShares*price);
+        
     }
 }

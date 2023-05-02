@@ -11,20 +11,29 @@ public class Portfolio
     private ArrayList<StockHolding>stocks;
     private double investment;
     private double payout;
+    /**
+     * Constructor
+     */
     public Portfolio(){
         stocks  = new ArrayList<StockHolding>();
         investment = 0;
         payout = 0;
     }
+
+    /**
+     * Getter for Lifetime Investment 
+     */
     public double getInvestment(){
         return investment;
     }
-    
+
+    /**
+     * Getter for Lifetime Payout
+     */
     public double getPayout(){
         return payout;
     }
-    
-    
+
     /**
      * Finds the index of the stock in the array list. Using the given symbol.
      *
@@ -33,19 +42,18 @@ public class Portfolio
      */
     private int getIndex(String symbol){
         int index = 0;
-            for(int i=0;i<stocks.size();i++){
-                if(stocks.get(i).getSymbol().equals(symbol)){
-                    index = i;
-                }                                   
-                else{
-                    index = -1;
-                }
+        for(int i=0;i<stocks.size();i++){
+            if(stocks.get(i).getSymbol().equals(symbol)){
+                index = i;
+            }                                   
+            else{
+                index = -1;
             }
-        
+        }
 
         return index;
     }
-    
+
     /**
      * Adds shares at a new price if stock is already being held. If not adds stock to portfolio while adding to the life investment counter.
      *
@@ -53,20 +61,20 @@ public class Portfolio
      * @returns how much it cost
      */
     public double buyStock(String symbol, String name, int shares, double price){
-        int index = getIndex(symbol);
-        double cost = 0;
-        if(index != -1 && index != 0){
-            stocks.get(index).buyShares(shares, price);
+        for (StockHolding stock : stocks) {
+            if (stock.getSymbol().equals(symbol)) {
+                stock.buyShares(shares, price);
+                investment +=shares * price;
+                return shares * price;
+            }
         }
-        else{
-            StockHolding newStock = new StockHolding(symbol, name, shares, price);
-            stocks.add(newStock);
-        }
-        cost = price*shares;
-        investment += cost;
-        return cost;
+        StockHolding newStock = new StockHolding(symbol, name, shares, price);
+        stocks.add(newStock);
+        investment += shares * price;
+        return shares * price;
+
     }
-    
+
     /**
      * Sells the stock given the symbol, and how many shares. If no shares remain the item is removed from the arrayList. Also adds to lifetime payout.
      *
@@ -74,27 +82,24 @@ public class Portfolio
      * @returns profit from selling 
      */
     public double sellStock(String symbol, int shares){
-        int index = getIndex(symbol);
-        double cost = 0;
-        if(index != -1){
-            if(stocks.get(index).getNumShares()>shares){
-                cost = stocks.get(index).sellShares(shares);
-            }
-            if(stocks.get(index).getNumShares()-shares==0){
-                cost = stocks.get(index).sellShares(shares);
-                stocks.remove(index);
+        double cost = 0.0;
+
+        for (int i = 0; i < stocks.size(); i++) {
+            StockHolding s = stocks.get(i);
+            if (s.getSymbol().equals(symbol)) {
+                payout += s.sellShares(shares);
+                if (s.getNumShares() == 0) {
+                    stocks.remove(i);
+                }
             }
         }
-        else{
-            return -1;
-        }
-        payout+=cost;
+        payout += cost;
         return cost;
+
     }
-    
+
     /**
      * Gets the current value of the portfolio by multipling shares owned by price
-     
      * @returns total value
      */
     public double getCurrentValue(){
@@ -105,6 +110,9 @@ public class Portfolio
         return total;
     }
     // @Override
+    /**
+     * toString Override method given in the problem set.
+     */
     public String toString()
     {
         // //DO NOT EDIT THIS METHOD.
@@ -115,7 +123,7 @@ public class Portfolio
 
         for(StockHolding s : stocks){
             sb.append(s.toString());
-            
+
         }
         return sb.toString();
     }
